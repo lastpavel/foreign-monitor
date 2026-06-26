@@ -1,8 +1,16 @@
 {
   "version": "1.0.0",
+
   "binApi": "https://bin-api.aktas405.workers.dev/",
+
   "refresh": 5000,
+
   "debug": false,
+
+  "cache": {
+    "enabled": true,
+    "maxAge": 60
+  },
 
   "features": {
     "showPhoneFlags": true,
@@ -13,6 +21,16 @@
 
   "ui": {
     "theme": "green",
-    "position": "bottom"
+    "position": "bottom",
+    "title": "Yabancı Bağış Monitörü"
+  },
+
+  "monitor": {
+    "enabled": true
+  },
+
+  "update": {
+    "enabled": true,
+    "notify": true
   }
 }
