@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "binApi": "https://bin-api.aktas405.workers.dev/",
+  "refresh": 5000,
+  "debug": false,
+
+  "features": {
+    "showPhoneFlags": true,
+    "showBinCountry": true,
+    "showPopup": true,
+    "showReviewPanel": true
+  },
+
+  "ui": {
+    "theme": "green",
+    "position": "bottom"
+  }
+}
