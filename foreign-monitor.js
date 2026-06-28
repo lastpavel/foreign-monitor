@@ -850,3 +850,232 @@
 	window.__countryDetector = setInterval(run, 5000);
 	console.log('SCRIPT BITTI');
 })();
+
+
+/*  bağış kalemi yazdırma*/
+
+
+async function run() {
+
+    const iframe = document.querySelector(
+        'iframe[id*="layout_iframe_5_app-donations"]'
+    );
+
+    if (!iframe) return;
+
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+
+    if (!doc) return;
+
+    doc.querySelectorAll('tr[onclick*="edit_order"]').forEach(row => {
+
+        if (row.querySelector(".fm-test")) return;
+
+        const detail = row.nextElementSibling;
+
+        if (!detail || !detail.id?.startsWith("order-detail-")) return;
+
+        const tags = [...detail.querySelectorAll("li")]
+            .map(li => {
+                const t = li.textContent.trim();
+                return t.includes("→")
+                    ? t.split("→")[1].trim()
+                    : null;
+            })
+            .filter(Boolean);
+
+        if (!tags.length) return;
+
+        const number =
+            row.querySelector("td:first-child b")
+                ?.textContent
+                .replace(".", "")
+                .trim() || "";
+
+        row.style.position = "relative";
+        row.style.height = "78px";
+
+        const div = doc.createElement("div");
+
+        div.className = "fm-test";
+
+        div.style.cssText = `
+            position:absolute;
+            left:40px;
+            right:20px;
+            bottom:2px;
+            display:flex;
+            gap:6px;
+            flex-wrap:wrap;
+            align-items:center;
+            z-index:999999;
+            padding:3px 0;
+            pointer-events:none;
+        `;
+
+ const uniqueTags = [...new Set(tags)];
+
+div.innerHTML = uniqueTags.map((tag, index) => `
+    <span style="
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        height:22px;
+        padding:0 10px 0 0;
+        background:linear-gradient(180deg,#ffffff,#f4f4f4);
+        color:#333;
+        border:1px solid #d7d7d7;
+        border-radius:999px;
+        box-shadow:
+            0 1px 2px rgba(0,0,0,.08),
+            inset 0 1px 0 rgba(255,255,255,.8);
+        font-size:11px;
+        font-weight:600;
+        white-space:nowrap;
+        overflow:hidden;
+    ">
+        <span style="
+            width:22px;
+            height:22px;
+            margin-right:8px;
+            border-radius:50%;
+            background:#2dc56b;
+            color:#fff;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:11px;
+            font-weight:700;
+            flex:none;
+        ">${index + 1}</span>
+
+        ${tag}
+    </span>
+`).join("");
+
+        row.appendChild(div);
+
+    });
+
+}
+
+setInterval(run, 1000);
+run();
+
+
+
+/*  yorumları bulma */
+
+async function runDonationNotes() {
+
+    const iframe = document.querySelector(
+        'iframe[id*="layout_iframe_5_app-donations"]'
+    );
+
+    if (!iframe) return;
+
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+
+    if (!doc) return;
+
+    doc.querySelectorAll('tr[onclick*="edit_order"]').forEach(row => {
+
+        if (row.querySelector(".fm-note")) return;
+
+        const payment = [...row.querySelectorAll("span.eds-label")]
+            .find(x => x.textContent.trim() === "Kredi Kartı");
+
+        if (!payment) return;
+
+        const detail = row.nextElementSibling;
+
+        if (!detail) return;
+
+        const note = detail.querySelector('[id^="donation-detail-"]');
+
+        if (!note) return;
+
+        const text = note.textContent.trim();
+
+        if (
+            !text ||
+            text === "Açıklama bulunmuyor."
+        ) return;
+
+        row.style.position = "relative";
+
+        const div = doc.createElement("div");
+
+        div.className = "fm-note";
+
+        div.style.cssText = `
+           position: absolute;
+    right: 20px;
+    bottom: 2px;
+    max-width: 520px;
+    padding: 5px 10px;
+    background: firebrick;
+    border: 1px solid rgb(229, 214, 123);
+    border-radius: 6px;
+    font-size: 11px;
+    color: rgb(255 255 255);
+    line-height: 1.35;
+    text-align: right;
+    z-index: 999999;
+    pointer-events: none;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+        `;
+
+        div.innerHTML = `
+            <b>📝 Açıklama:</b> ${text}
+        `;
+
+        row.appendChild(div);
+
+    });
+
+}
+
+setInterval(runDonationNotes,1000);
+runDonationNotes();
+
+
+
+/*  satır yüksekliği arttırma*/
+
+async function fixDonationRows() {
+
+    const iframe = document.querySelector(
+        'iframe[id*="layout_iframe_5_app-donations"]'
+    );
+
+    if (!iframe) return;
+
+    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+
+    if (!doc) return;
+
+    doc.querySelectorAll('tr[onclick*="edit_order"]').forEach(row => {
+
+        if (row.dataset.fmSpacing) return;
+
+        row.dataset.fmSpacing = "1";
+
+        row.style.height = "120px";
+
+        row.querySelectorAll("td").forEach(td => {
+
+            td.style.verticalAlign = "top";
+            td.style.paddingBottom = "28px";
+
+        });
+
+    });
+
+}
+
+setInterval(fixDonationRows,1000);
+fixDonationRows();
