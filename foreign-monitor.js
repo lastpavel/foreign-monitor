@@ -583,12 +583,9 @@ debrisRows.forEach(item => {
     item.row.style.position = "relative";
 
     const box = document.createElement("div");
+box.className = "fm-debris";
 
-    box.className = "fm-debris";
-
-    box.innerHTML = `
-     <div class="fm-debris">
-
+box.innerHTML = `
     <label class="fm-debris-check">
         <input
             type="checkbox"
@@ -610,9 +607,7 @@ debrisRows.forEach(item => {
     >
         Kaydet
     </button>
-
-</div>
-    `;
+`;
 
     // BURASI ÖNEMLİ
     box.addEventListener("click", e => {
