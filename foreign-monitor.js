@@ -587,19 +587,31 @@ debrisRows.forEach(item => {
     box.className = "fm-debris";
 
     box.innerHTML = `
-        <label class="fm-debris-check">
-            <input
-                type="checkbox"
-                class="fm-debris-checkbox"
-            >
-            Debris Bildirim
-        </label>
+     <div class="fm-debris">
 
+    <label class="fm-debris-check">
         <input
-            type="text"
-            class="fm-debris-date"
-            placeholder="GG.AA.YYYY"
+            type="checkbox"
+            class="fm-debris-checkbox"
         >
+        Debris Bildirim
+    </label>
+
+    <input
+        type="text"
+        class="fm-debris-date"
+        placeholder="GG.AA.YYYY"
+        maxlength="10"
+    >
+
+    <button
+        type="button"
+        class="fm-debris-save"
+    >
+        Kaydet
+    </button>
+
+</div>
     `;
 
     // BURASI ÖNEMLİ
