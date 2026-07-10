@@ -591,7 +591,7 @@ box.className = "fm-debris";
 box.style.cssText = `
 position:absolute;
 right:15px;
-bottom:4px;
+bottom:34px;
 display:flex;
 align-items:center;
 gap:10px;
