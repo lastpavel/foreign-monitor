@@ -602,6 +602,31 @@ debrisRows.forEach(item => {
         >
     `;
 
+    // BURASI ÖNEMLİ
+    box.addEventListener("click", e => {
+        e.stopPropagation();
+    });
+
+    box.addEventListener("mousedown", e => {
+        e.stopPropagation();
+    });
+
+    box.addEventListener("mouseup", e => {
+        e.stopPropagation();
+    });
+
+    box.querySelectorAll("input").forEach(input => {
+
+        input.addEventListener("click", e => {
+            e.stopPropagation();
+        });
+
+        input.addEventListener("mousedown", e => {
+            e.stopPropagation();
+        });
+
+    });
+
     item.row.appendChild(box);
 
 });
