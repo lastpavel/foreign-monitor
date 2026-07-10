@@ -609,7 +609,7 @@ box.innerHTML = `
             type="checkbox"
             class="fm-debris-checkbox"
         >
-        Debris Bildirim
+        Derbis Bildirim
     </label>
 
     <input
