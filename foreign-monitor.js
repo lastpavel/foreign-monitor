@@ -584,78 +584,25 @@ debrisRows.forEach(item => {
 
     item.row.style.position = "relative";
 
-	if (!document.getElementById("fm-debris-style")) {
-
-    const style = document.createElement("style");
-
-    style.id = "fm-debris-style";
-
-    style.textContent = `
-.fm-debris{
-    position:absolute;
-    right:15px;
-    bottom:4px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:6px 10px;
-    background:#fff;
-    border:1px solid #dcdcdc;
-    border-radius:8px;
-    box-shadow:0 1px 3px rgba(0,0,0,.08);
-    z-index:99999;
-    min-width:max-content;
-}
-
-.fm-debris-check{
-    display:flex;
-    align-items:center;
-    gap:6px;
-    font-size:12px;
-    font-weight:600;
-}
-
-.fm-debris-date{
-    width:90px;
-    height:24px;
-    border:1px solid #cfcfcf;
-    border-radius:5px;
-    text-align:center;
-    font-size:12px;
-}
-
-.fm-debris-date:focus{
-    border-color:#2dc56b;
-    box-shadow:0 0 0 3px rgba(45,197,107,.18);
-}
-
-.fm-debris-save{
-    height:28px;
-    padding:0 12px;
-    border:none;
-    border-radius:6px;
-    background:#2dc56b;
-    color:#fff;
-    font-size:12px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.fm-debris-save:hover{
-    background:#23a956;
-}
-`;
-
-    document.head.appendChild(style);
-}
-
-const box = document.createElement("div");
-box.className = "fm-debris";
+	
 
     const box = document.createElement("div");
 box.className = "fm-debris";
-
+box.style.cssText = `
+position:absolute;
+right:15px;
+bottom:4px;
+display:flex;
+align-items:center;
+gap:10px;
+padding:6px 10px;
+background:#fff;
+border:1px solid #dcdcdc;
+border-radius:8px;
+box-shadow:0 1px 3px rgba(0,0,0,.08);
+z-index:99999;
+min-width:max-content;
+`;
 box.innerHTML = `
     <label class="fm-debris-check">
         <input
@@ -679,7 +626,58 @@ box.innerHTML = `
         Kaydet
     </button>
 `;
+const check = box.querySelector(".fm-debris-check");
+const date = box.querySelector(".fm-debris-date");
+const save = box.querySelector(".fm-debris-save");
 
+check.style.cssText = `
+display:flex;
+align-items:center;
+gap:6px;
+font-size:12px;
+font-weight:600;
+`;
+
+date.style.cssText = `
+width:90px;
+height:24px;
+border:1px solid #cfcfcf;
+border-radius:5px;
+text-align:center;
+font-size:12px;
+outline:none;
+`;
+
+date.addEventListener("focus", () => {
+    date.style.borderColor = "#2dc56b";
+    date.style.boxShadow = "0 0 0 3px rgba(45,197,107,.18)";
+});
+
+date.addEventListener("blur", () => {
+    date.style.borderColor = "#cfcfcf";
+    date.style.boxShadow = "none";
+});
+
+save.style.cssText = `
+height:28px;
+padding:0 12px;
+border:none;
+border-radius:6px;
+background:#2dc56b;
+color:#fff;
+font-size:12px;
+font-weight:600;
+cursor:pointer;
+transition:.2s;
+`;
+
+save.addEventListener("mouseenter", () => {
+    save.style.background = "#23a956";
+});
+
+save.addEventListener("mouseleave", () => {
+    save.style.background = "#2dc56b";
+});
     // BURASI ÖNEMLİ
     box.addEventListener("click", e => {
         e.stopPropagation();
