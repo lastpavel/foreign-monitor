@@ -2,8 +2,6 @@
 	console.log('SCRIPT BASLADI');
 
 
-    document.head.appendChild(style);
-}
 	if (window.__countryDetector) {
 		clearInterval(window.__countryDetector);
 	}
