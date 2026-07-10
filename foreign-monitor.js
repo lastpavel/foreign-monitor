@@ -633,7 +633,91 @@ box.innerHTML = `
         });
 
     });
+const match = item.row
+    .getAttribute("onclick")
+    ?.match(/edit_order\(\s*'(\d+)'\s*,\s*'([^']+)'\s*,\s*'([^']+)'\s*\)/);
 
+if(!match) return;
+
+const orderId = match[1];
+const orderCode = match[2];
+const customerId = match[3];
+
+const checkbox = box.querySelector(".fm-debris-checkbox");
+const dateInput = box.querySelector(".fm-debris-date");
+const saveBtn = box.querySelector(".fm-debris-save");
+
+(async()=>{
+
+    try{
+
+        const res = await fetch(
+            "https://foreign-monitor.aktas405.workers.dev/debris/" + orderId
+        );
+
+        if(res.ok){
+
+    const json = await res.json();
+
+    checkbox.checked = json.checked == 1;
+    dateInput.value = json.notify_date || "";
+
+}
+
+    }catch(e){
+        console.log(e);
+    }
+
+})();
+
+saveBtn.onclick = async e => {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    saveBtn.disabled = true;
+    saveBtn.innerText = "Kaydediliyor...";
+
+    try{
+
+        await fetch(
+            "https://foreign-monitor.aktas405.workers.dev/debris",
+            {
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+
+                    order_id:orderId,
+                    order_code:orderCode,
+                    customer_id:customerId,
+
+                    checked:checkbox.checked ? 1 : 0,
+                    notify_date:dateInput.value.trim()
+
+                })
+            }
+        );
+
+        saveBtn.innerText="Kaydedildi";
+
+    }catch(e){
+
+        console.log(e);
+
+        saveBtn.innerText="Hata";
+
+    }
+
+    setTimeout(()=>{
+
+        saveBtn.disabled=false;
+        saveBtn.innerText="Kaydet";
+
+    },1500);
+
+};
     item.row.appendChild(box);
 
 });
