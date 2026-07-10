@@ -275,63 +275,7 @@
     font-size:11px;
 }
 
-.fm-debris{
 
-    position:absolute;
-
-    right:15px;
-
-    bottom:4px;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:10px;
-
-    padding:6px 10px;
-
-    background:#fff;
-
-    border:1px solid #dcdcdc;
-
-    border-radius:8px;
-
-    box-shadow:0 1px 3px rgba(0,0,0,.08);
-
-    z-index:99999;
-
-}
-
-.fm-debris-check{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:6px;
-
-    font-size:12px;
-
-    font-weight:600;
-
-}
-
-.fm-debris-date{
-
-    width:90px;
-
-    height:24px;
-
-    border:1px solid #cfcfcf;
-
-    border-radius:5px;
-
-    text-align:center;
-
-    font-size:12px;
-
-}
 
 @keyframes pulseBin{
 
