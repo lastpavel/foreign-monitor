@@ -569,6 +569,43 @@
 			return;
 		}
 
+
+const debrisRows = [
+    ...foreignList,
+    ...reviewList
+];
+
+debrisRows.forEach(item => {
+
+    if(item.row.querySelector(".fm-debris"))
+        return;
+
+    item.row.style.position = "relative";
+
+    const box = document.createElement("div");
+
+    box.className = "fm-debris";
+
+    box.innerHTML = `
+        <label class="fm-debris-check">
+            <input
+                type="checkbox"
+                class="fm-debris-checkbox"
+            >
+            Debris Bildirim
+        </label>
+
+        <input
+            type="text"
+            class="fm-debris-date"
+            placeholder="GG.AA.YYYY"
+        >
+    `;
+
+    item.row.appendChild(box);
+
+});
+		
 		monitor.style.display = 'block';
 		const content = document.getElementById('foreign-monitor-content');
 
