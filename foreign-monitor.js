@@ -1,7 +1,6 @@
 (function () {
 	console.log('SCRIPT BASLADI');
 
-
 	if (window.__countryDetector) {
 		clearInterval(window.__countryDetector);
 	}
@@ -362,28 +361,18 @@
 
 			const phone = match[0].replace(/\D/g, '');
 			const country = getCountry(phone);
-			
-			if(country){
 
-    gsmDiv.style.position =
-        'relative';
+			if (country) {
+				gsmDiv.style.position = 'relative';
 
-    let phoneFlag =
-        gsmDiv.querySelector(
-            '.phone-country-flag'
-        );
+				let phoneFlag = gsmDiv.querySelector('.phone-country-flag');
 
-    if(!phoneFlag){
+				if (!phoneFlag) {
+					phoneFlag = document.createElement('span');
 
-        phoneFlag =
-            document.createElement(
-                'span'
-            );
+					phoneFlag.className = 'phone-country-flag';
 
-        phoneFlag.className =
-            'phone-country-flag';
-
-        phoneFlag.style.cssText = `
+					phoneFlag.style.cssText = `
             position:absolute;
             right:0;
             top:-2px;
@@ -391,13 +380,10 @@
             pointer-events:none;
         `;
 
-        gsmDiv.appendChild(
-            phoneFlag
-        );
+					gsmDiv.appendChild(phoneFlag);
+				}
 
-    }
-
-    phoneFlag.innerHTML = `
+				phoneFlag.innerHTML = `
         <img
             src="https://flagcdn.com/16x12/${country.code.toLowerCase()}.png"
             style="
@@ -407,8 +393,7 @@
             "
         >
     `;
-
-}
+			}
 
 			const isCreditCard = [...row.querySelectorAll('.eds-label')].some(
 				(el) => el.innerText.trim() === 'Kredi Kartı'
@@ -465,8 +450,7 @@
 				.querySelectorAll('td')[9]
 				?.innerText?.trim()
 				?.replace(/\s+/g, '');
-				const cardTd =
-    row.querySelectorAll('td')[9];
+			const cardTd = row.querySelectorAll('td')[9];
 
 			if (!cardNumber) {
 				continue;
@@ -502,25 +486,13 @@
 			if (!binData || !binData.ulke || binData.ulke === 'TURKEY') {
 				continue;
 			}
-			if(cardTd){
+			if (cardTd) {
+				const originalText = cardTd.innerText.trim();
 
-    const originalText =
-        cardTd.innerText.trim();
-
-    if(
-        !originalText.includes(
-            ' - ' + binData.ulke
-        )
-    ){
-
-        cardTd.innerText =
-            originalText +
-            ' - ' +
-            binData.ulke;
-
-    }
-
-}
+				if (!originalText.includes(' - ' + binData.ulke)) {
+					cardTd.innerText = originalText + ' - ' + binData.ulke;
+				}
+			}
 			const name =
 				row.querySelectorAll('td')[2]?.innerText?.split('\n')[0]?.trim() || '-';
 
@@ -571,31 +543,23 @@
 			return;
 		}
 
+		const debrisRows = [...foreignList, ...reviewList];
 
-const debrisRows = [
-    ...foreignList,
-    ...reviewList
-];
+		debrisRows.forEach((item) => {
+			if (item.row.querySelector('.fm-debris')) return;
 
-debrisRows.forEach(item => {
+			item.row.style.position = 'relative';
 
-    if(item.row.querySelector(".fm-debris"))
-        return;
-
-    item.row.style.position = "relative";
-
-	
-
-    const box = document.createElement("div");
-box.className = "fm-debris";
-box.style.cssText = `
+			const box = document.createElement('div');
+			box.className = 'fm-debris';
+			box.style.cssText = `
 position:absolute;
-right:15px;
-bottom:34px;
+right:0;
+bottom:35px;
 display:flex;
 align-items:center;
 gap:10px;
-padding:6px 10px;
+padding:3px 10px;
 background:#fff;
 border:1px solid #dcdcdc;
 border-radius:8px;
@@ -603,34 +567,107 @@ box-shadow:0 1px 3px rgba(0,0,0,.08);
 z-index:99999;
 min-width:max-content;
 `;
-box.innerHTML = `
-    <label class="fm-debris-check">
+			box.innerHTML = `
+    
+
+    <div class="fm-debris-top">
+
+        <label class="fm-debris-check">
+            <input
+                type="checkbox"
+                class="fm-debris-checkbox"
+            >
+            Debris Bildirim
+        </label>
+
         <input
-            type="checkbox"
-            class="fm-debris-checkbox"
+            type="text"
+            class="fm-debris-date"
+            placeholder="GG.AA.YYYY"
+            maxlength="10"
         >
-        Derbis Bildirim
-    </label>
 
-    <input
-        type="text"
-        class="fm-debris-date"
-        placeholder="GG.AA.YYYY"
-        maxlength="10"
-    >
+        <button
+            type="button"
+            class="fm-debris-save"
+        >
+            Kaydet
+        </button>
+        
+         <div class="fm-file-upload">
 
-    <button
-        type="button"
-        class="fm-debris-save"
-    >
-        Kaydet
-    </button>
+        <input
+            type="file"
+            id="fm-file-18804"
+            class="fm-file-input"
+            accept=".pdf,.jpg,.jpeg,.png,.webp"
+        >
+
+        <label
+            for="fm-file-18804"
+            class="fm-file-button"
+        >
+            Dosya Yükle
+        </label>
+
+        <div class="fm-file-info">
+
+            <div class="fm-file-title">
+
+			    <span class="fm-file-name">
+			        Henüz dosya seçilmedi
+			    </span>
+			
+			    <span class="fm-file-preview">
+			        👁️
+			    </span>
+			
+			</div>
+
+            <div class="fm-file-actions">
+
+                <button
+                    type="button"
+                    class="fm-file-change"
+                >
+                    Değiştir
+                </button>
+
+                <button
+                    type="button"
+                    class="fm-file-delete"
+                >
+                    Sil
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+  <div class="fm-preview-popup" style="display:none;">
+
+    <div class="fm-preview-box">
+
+        <div class="fm-preview-close">✕</div>
+
+        <div class="fm-preview-content"></div>
+
+    </div>
+
+</div>
+
+   
+
+</div>
+  
 `;
-const check = box.querySelector(".fm-debris-check");
-const date = box.querySelector(".fm-debris-date");
-const save = box.querySelector(".fm-debris-save");
+			const check = box.querySelector('.fm-debris-check');
+			const date = box.querySelector('.fm-debris-date');
+			const save = box.querySelector('.fm-debris-save');
 
-check.style.cssText = `
+			check.style.cssText = `
 display:flex;
 align-items:center;
 gap:6px;
@@ -638,7 +675,7 @@ font-size:12px;
 font-weight:600;
 `;
 
-date.style.cssText = `
+			date.style.cssText = `
 width:90px;
 height:24px;
 border:1px solid #cfcfcf;
@@ -648,17 +685,17 @@ font-size:12px;
 outline:none;
 `;
 
-date.addEventListener("focus", () => {
-    date.style.borderColor = "#2dc56b";
-    date.style.boxShadow = "0 0 0 3px rgba(45,197,107,.18)";
-});
+			date.addEventListener('focus', () => {
+				date.style.borderColor = '#2dc56b';
+				date.style.boxShadow = '0 0 0 3px rgba(45,197,107,.18)';
+			});
 
-date.addEventListener("blur", () => {
-    date.style.borderColor = "#cfcfcf";
-    date.style.boxShadow = "none";
-});
+			date.addEventListener('blur', () => {
+				date.style.borderColor = '#cfcfcf';
+				date.style.boxShadow = 'none';
+			});
 
-save.style.cssText = `
+			save.style.cssText = `
 height:28px;
 padding:0 12px;
 border:none;
@@ -671,126 +708,307 @@ cursor:pointer;
 transition:.2s;
 `;
 
-save.addEventListener("mouseenter", () => {
-    save.style.background = "#23a956";
-});
+			save.addEventListener('mouseenter', () => {
+				save.style.background = '#23a956';
+			});
 
-save.addEventListener("mouseleave", () => {
-    save.style.background = "#2dc56b";
-});
-    // BURASI ÖNEMLİ
-    box.addEventListener("click", e => {
-        e.stopPropagation();
-    });
+			save.addEventListener('mouseleave', () => {
+				save.style.background = '#2dc56b';
+			});
+			// BURASI ÖNEMLİ
+			box.addEventListener('click', (e) => {
+				e.stopPropagation();
+			});
 
-    box.addEventListener("mousedown", e => {
-        e.stopPropagation();
-    });
+			box.addEventListener('mousedown', (e) => {
+				e.stopPropagation();
+			});
 
-    box.addEventListener("mouseup", e => {
-        e.stopPropagation();
-    });
+			box.addEventListener('mouseup', (e) => {
+				e.stopPropagation();
+			});
 
-    box.querySelectorAll("input").forEach(input => {
+			box.querySelectorAll('input').forEach((input) => {
+				input.addEventListener('click', (e) => {
+					e.stopPropagation();
+				});
 
-        input.addEventListener("click", e => {
-            e.stopPropagation();
-        });
+				input.addEventListener('mousedown', (e) => {
+					e.stopPropagation();
+				});
+			});
+			const match = item.row
+				.getAttribute('onclick')
+				?.match(/edit_order\(\s*'(\d+)'\s*,\s*'([^']+)'\s*,\s*'([^']+)'\s*\)/);
 
-        input.addEventListener("mousedown", e => {
-            e.stopPropagation();
-        });
+			if (!match) return;
 
-    });
-const match = item.row
-    .getAttribute("onclick")
-    ?.match(/edit_order\(\s*'(\d+)'\s*,\s*'([^']+)'\s*,\s*'([^']+)'\s*\)/);
+			const orderId = match[1];
+			const orderCode = match[2];
+			const customerId = match[3];
 
-if(!match) return;
+			const checkbox = box.querySelector('.fm-debris-checkbox');
+			const dateInput = box.querySelector('.fm-debris-date');
+			const saveBtn = box.querySelector('.fm-debris-save');
 
-const orderId = match[1];
-const orderCode = match[2];
-const customerId = match[3];
+			const fileInput = box.querySelector('.fm-file-input');
+			const fileName = box.querySelector('.fm-file-name');
+			const uploadBtn = box.querySelector('.fm-file-button');
+			const changeBtn = box.querySelector('.fm-file-change');
+			const deleteBtn = box.querySelector('.fm-file-delete');
 
-const checkbox = box.querySelector(".fm-debris-checkbox");
-const dateInput = box.querySelector(".fm-debris-date");
-const saveBtn = box.querySelector(".fm-debris-save");
+			const previewPopup = box.querySelector('.fm-preview-popup');
 
-(async()=>{
+			const previewContent = box.querySelector('.fm-preview-content');
 
-    try{
+			const previewClose = box.querySelector('.fm-preview-close');
+			const previewBtn = box.querySelector('.fm-file-preview');
+			let currentFile = "";
+			(async () => {
+				uploadBtn.onclick = (e) => {
+					e.preventDefault();
+					e.stopPropagation();
 
-        const res = await fetch(
-            "https://foreign-monitor.aktas405.workers.dev/debris/" + orderId
-        );
+					fileInput.click();
+				};
 
-        if(res.ok){
+				changeBtn.onclick = (e) => {
+					e.preventDefault();
+					e.stopPropagation();
 
-    const json = await res.json();
+					fileInput.click();
+				};
 
-    checkbox.checked = json.checked == 1;
-    dateInput.value = json.notify_date || "";
+				deleteBtn.onclick = async (e) => {
+					e.preventDefault();
+					e.stopPropagation();
+
+					if (!confirm('Dosya silinsin mi?')) return;
+
+					try {
+						await fetch(
+							'https://foreign-monitor.aktas405.workers.dev/delete-file',
+							{
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json',
+								},
+								body: JSON.stringify({
+									order_id: orderId,
+								}),
+							}
+						);
+
+						fileInput.value = '';
+
+						fileName.textContent = 'Henüz dosya seçilmedi';
+
+						uploadBtn.textContent = 'Dosya Yükle';
+						currentFile = "";
+
+         previewBtn.style.display = "none";
+
+						alert('Dosya silindi.');
+					} catch (err) {
+						console.log(err);
+
+						alert('Silinemedi.');
+					}
+				};
+
+				fileInput.onchange = () => {
+					if (!fileInput.files.length) {
+						fileName.textContent = 'Henüz dosya seçilmedi';
+
+						uploadBtn.textContent = 'Dosya Yükle';
+
+						return;
+					}
+
+					fileName.textContent = fileInput.files[0].name;
+          currentFile = fileInput.files[0].name;
+					uploadBtn.textContent = 'Yüklendi ✓';
+				};
+
+				try {
+					const res = await fetch(
+						'https://foreign-monitor.aktas405.workers.dev/debris/' + orderId
+					);
+
+					if (res.ok) {
+						
+						const json = await res.json();
+
+						checkbox.checked = json.checked == 1;
+						dateInput.value = json.notify_date || '';
+
+				if (json.file_name) {
+
+    currentFile = json.file_name;
+
+    fileName.textContent = json.file_name;
+
+    uploadBtn.textContent = "Yüklendi ✓";
+
+    previewBtn.style.display = "inline-flex";
 
 }
+				else {
+				
+				    fileName.textContent = "Henüz dosya seçilmedi";
+				
+				    uploadBtn.textContent = "Dosya Yükle";
+		   		currentFile = "";
 
-    }catch(e){
-        console.log(e);
-    }
+				    previewBtn.style.display = "none";
+				
+				}
+					}
+					previewBtn.onclick = () => {
 
-})();
+    if(fileName.textContent === "Henüz dosya seçilmedi")
+        return;
 
-saveBtn.onclick = async e => {
+    previewPopup.style.display = "flex";
 
-    e.preventDefault();
-    e.stopPropagation();
-
-    saveBtn.disabled = true;
-    saveBtn.innerText = "Kaydediliyor...";
-
-    try{
-
-        await fetch(
-            "https://foreign-monitor.aktas405.workers.dev/debris",
-            {
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify({
-
-                    order_id:orderId,
-                    order_code:orderCode,
-                    customer_id:customerId,
-
-                    checked:checkbox.checked ? 1 : 0,
-                    notify_date:dateInput.value.trim()
-
-                })
-            }
-        );
-
-        saveBtn.innerText="Kaydedildi";
-
-    }catch(e){
-
-        console.log(e);
-
-        saveBtn.innerText="Hata";
-
-    }
-
-    setTimeout(()=>{
-
-        saveBtn.disabled=false;
-        saveBtn.innerText="Kaydet";
-
-    },1500);
+    previewContent.innerHTML = `
+        <iframe
+            src="https://foreign-monitor.aktas405.workers.dev/file/${encodeURIComponent(currentFile)}"
+            style="
+                width:100%;
+                height:80vh;
+                border:none;
+            "
+        ></iframe>
+    `;
 
 };
-    item.row.appendChild(box);
+
+previewClose.onclick = () => {
+
+    previewPopup.style.display = "none";
+
+    previewContent.innerHTML = "";
+
+};
+
+previewPopup.onclick = e => {
+
+    if(e.target === previewPopup){
+
+        previewPopup.style.display = "none";
+        previewContent.innerHTML = "";
+
+    }
+
+};
+
+document.addEventListener("keydown",e=>{
+
+    if(
+        e.key==="Escape" &&
+        previewPopup.style.display==="flex"
+    ){
+
+        previewPopup.style.display="none";
+        previewContent.innerHTML="";
+
+    }
 
 });
-		
+				} catch (e) {
+					console.log(e);
+				}
+			})();
+
+			saveBtn.onclick = async (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+
+				saveBtn.disabled = true;
+				saveBtn.innerText = 'Kaydediliyor...';
+
+				try {
+					// -------------------------------------------------
+					// DOSYA SEÇİLMEDİYSE
+					// -------------------------------------------------
+
+					if (!fileInput.files.length) {
+						await fetch('https://foreign-monitor.aktas405.workers.dev/debris', {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify({
+								order_id: orderId,
+								order_code: orderCode,
+								customer_id: customerId,
+
+								checked: checkbox.checked ? 1 : 0,
+								notify_date: dateInput.value.trim(),
+							}),
+						});
+					}
+
+					// -------------------------------------------------
+					// DOSYA VARSA
+					// -------------------------------------------------
+					else {
+						const form = new FormData();
+
+						form.append('file', fileInput.files[0]);
+
+						form.append('order_id', orderId);
+
+						form.append('order_code', orderCode);
+
+						form.append('customer_id', customerId);
+
+						form.append('checked', checkbox.checked ? '1' : '0');
+
+						form.append('notify_date', dateInput.value.trim());
+
+						const res = await fetch(
+							'https://foreign-monitor.aktas405.workers.dev/upload',
+
+							{
+								method: 'POST',
+
+								body: form,
+							}
+						);
+
+						const json = await res.json();
+
+						if (!json.success) {
+							throw new Error(json.message);
+						}
+						currentFile = json.file;
+
+fileName.textContent = json.file;
+
+previewBtn.style.display = "inline-flex";
+uploadBtn.textContent = "Yüklendi ✓";
+					}
+
+					saveBtn.innerText = 'Kaydedildi';
+				} catch (err) {
+					console.log(err);
+
+					alert(err.message);
+
+					saveBtn.innerText = 'Hata';
+				}
+
+				setTimeout(() => {
+					saveBtn.disabled = false;
+
+					saveBtn.innerText = 'Kaydet';
+				}, 1500);
+			};
+			item.row.appendChild(box);
+		});
+
 		monitor.style.display = 'block';
 		const content = document.getElementById('foreign-monitor-content');
 
@@ -1073,55 +1291,49 @@ saveBtn.onclick = async e => {
 	console.log('SCRIPT BITTI');
 })();
 
-
 /*  bağış kalemi yazdırma*/
 
-
 async function run() {
+	const iframe = document.querySelector(
+		'iframe[id*="layout_iframe_5_app-donations"]'
+	);
 
-    const iframe = document.querySelector(
-        'iframe[id*="layout_iframe_5_app-donations"]'
-    );
+	if (!iframe) return;
 
-    if (!iframe) return;
+	const doc = iframe.contentDocument || iframe.contentWindow?.document;
 
-    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+	if (!doc) return;
 
-    if (!doc) return;
+	doc.querySelectorAll('tr[onclick*="edit_order"]').forEach((row) => {
+		if (row.querySelector('.fm-test')) return;
 
-    doc.querySelectorAll('tr[onclick*="edit_order"]').forEach(row => {
+		const detail = row.nextElementSibling;
 
-        if (row.querySelector(".fm-test")) return;
+		if (!detail || !detail.id?.startsWith('order-detail-')) return;
 
-        const detail = row.nextElementSibling;
+		const tags = [...detail.querySelectorAll('li')]
+			.map((li) => {
+				const t = li.textContent.trim();
+				return t.includes('→') ? t.split('→')[1].trim() : null;
+			})
+			.filter(Boolean);
 
-        if (!detail || !detail.id?.startsWith("order-detail-")) return;
+		if (!tags.length) return;
 
-        const tags = [...detail.querySelectorAll("li")]
-            .map(li => {
-                const t = li.textContent.trim();
-                return t.includes("→")
-                    ? t.split("→")[1].trim()
-                    : null;
-            })
-            .filter(Boolean);
+		const number =
+			row
+				.querySelector('td:first-child b')
+				?.textContent.replace('.', '')
+				.trim() || '';
 
-        if (!tags.length) return;
+		row.style.position = 'relative';
+		row.style.height = '78px';
 
-        const number =
-            row.querySelector("td:first-child b")
-                ?.textContent
-                .replace(".", "")
-                .trim() || "";
+		const div = doc.createElement('div');
 
-        row.style.position = "relative";
-        row.style.height = "78px";
+		div.className = 'fm-test';
 
-        const div = doc.createElement("div");
-
-        div.className = "fm-test";
-
-        div.style.cssText = `
+		div.style.cssText = `
             position:absolute;
             left:40px;
             right:20px;
@@ -1135,9 +1347,11 @@ async function run() {
             pointer-events:none;
         `;
 
- const uniqueTags = [...new Set(tags)];
+		const uniqueTags = [...new Set(tags)];
 
-div.innerHTML = uniqueTags.map((tag, index) => `
+		div.innerHTML = uniqueTags
+			.map(
+				(tag, index) => `
     <span style="
         display:inline-flex;
         align-items:center;
@@ -1173,64 +1387,58 @@ div.innerHTML = uniqueTags.map((tag, index) => `
 
         ${tag}
     </span>
-`).join("");
+`
+			)
+			.join('');
 
-        row.appendChild(div);
-
-    });
-
+		row.appendChild(div);
+	});
 }
 
 setInterval(run, 1000);
 run();
 
-
-
 /*  yorumları bulma */
 
 async function runDonationNotes() {
+	const iframe = document.querySelector(
+		'iframe[id*="layout_iframe_5_app-donations"]'
+	);
 
-    const iframe = document.querySelector(
-        'iframe[id*="layout_iframe_5_app-donations"]'
-    );
+	if (!iframe) return;
 
-    if (!iframe) return;
+	const doc = iframe.contentDocument || iframe.contentWindow?.document;
 
-    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+	if (!doc) return;
 
-    if (!doc) return;
+	doc.querySelectorAll('tr[onclick*="edit_order"]').forEach((row) => {
+		if (row.querySelector('.fm-note')) return;
 
-    doc.querySelectorAll('tr[onclick*="edit_order"]').forEach(row => {
+		const payment = [...row.querySelectorAll('span.eds-label')].find(
+			(x) => x.textContent.trim() === 'Kredi Kartı'
+		);
 
-        if (row.querySelector(".fm-note")) return;
+		if (!payment) return;
 
-        const payment = [...row.querySelectorAll("span.eds-label")]
-            .find(x => x.textContent.trim() === "Kredi Kartı");
+		const detail = row.nextElementSibling;
 
-        if (!payment) return;
+		if (!detail) return;
 
-        const detail = row.nextElementSibling;
+		const note = detail.querySelector('[id^="donation-detail-"]');
 
-        if (!detail) return;
+		if (!note) return;
 
-        const note = detail.querySelector('[id^="donation-detail-"]');
+		const text = note.textContent.trim();
 
-        if (!note) return;
+		if (!text || text === 'Açıklama bulunmuyor.') return;
 
-        const text = note.textContent.trim();
+		row.style.position = 'relative';
 
-        if (
-            !text ||
-            text === "Açıklama bulunmuyor."
-        ) return;
+		const div = doc.createElement('div');
 
-        row.style.position = "relative";
+		div.className = 'fm-note';
 
-        const div = doc.createElement("div");
-
-        div.className = "fm-note";
-
-        div.style.cssText = `
+		div.style.cssText = `
            position: absolute;
     right: 20px;
     bottom: 2px;
@@ -1251,53 +1459,43 @@ async function runDonationNotes() {
     text-overflow: ellipsis;
         `;
 
-        div.innerHTML = `
+		div.innerHTML = `
             <b>📝 Açıklama:</b> ${text}
         `;
 
-        row.appendChild(div);
-
-    });
-
+		row.appendChild(div);
+	});
 }
 
-setInterval(runDonationNotes,1000);
+setInterval(runDonationNotes, 1000);
 runDonationNotes();
-
-
 
 /*  satır yüksekliği arttırma*/
 
 async function fixDonationRows() {
+	const iframe = document.querySelector(
+		'iframe[id*="layout_iframe_5_app-donations"]'
+	);
 
-    const iframe = document.querySelector(
-        'iframe[id*="layout_iframe_5_app-donations"]'
-    );
+	if (!iframe) return;
 
-    if (!iframe) return;
+	const doc = iframe.contentDocument || iframe.contentWindow?.document;
 
-    const doc = iframe.contentDocument || iframe.contentWindow?.document;
+	if (!doc) return;
 
-    if (!doc) return;
+	doc.querySelectorAll('tr[onclick*="edit_order"]').forEach((row) => {
+		if (row.dataset.fmSpacing) return;
 
-    doc.querySelectorAll('tr[onclick*="edit_order"]').forEach(row => {
+		row.dataset.fmSpacing = '1';
 
-        if (row.dataset.fmSpacing) return;
+		row.style.height = '120px';
 
-        row.dataset.fmSpacing = "1";
-
-        row.style.height = "120px";
-
-        row.querySelectorAll("td").forEach(td => {
-
-            td.style.verticalAlign = "top";
-            td.style.paddingBottom = "28px";
-
-        });
-
-    });
-
+		row.querySelectorAll('td').forEach((td) => {
+			td.style.verticalAlign = 'top';
+			td.style.paddingBottom = '28px';
+		});
+	});
 }
 
-setInterval(fixDonationRows,1000);
+setInterval(fixDonationRows, 1000);
 fixDonationRows();
