@@ -763,6 +763,241 @@ transition:.2s;
 
 			const previewClose = box.querySelector('.fm-preview-close');
 			const previewBtn = box.querySelector('.fm-file-preview');
+			
+			// =========================================
+// JS STYLE FALLBACK
+// =========================================
+
+fileInput.hidden = true;
+
+check.style.cssText = `
+display:flex;
+align-items:center;
+gap:6px;
+font-size:12px;
+font-weight:600;
+`;
+
+date.style.cssText = `
+width:90px;
+height:24px;
+border:1px solid #cfcfcf;
+border-radius:5px;
+text-align:center;
+font-size:12px;
+outline:none;
+`;
+
+date.onfocus = () => {
+    date.style.borderColor = "#2dc56b";
+    date.style.boxShadow = "0 0 0 3px rgba(45,197,107,.18)";
+};
+
+date.onblur = () => {
+    date.style.borderColor = "#cfcfcf";
+    date.style.boxShadow = "none";
+};
+
+save.style.cssText = `
+height:28px;
+padding:0 12px;
+border:none;
+border-radius:6px;
+background:#2dc56b;
+color:#fff;
+font-size:12px;
+font-weight:600;
+cursor:pointer;
+transition:.2s;
+`;
+
+save.onmouseenter = () => {
+    save.style.background = "#23a956";
+};
+
+save.onmouseleave = () => {
+    save.style.background = "#2dc56b";
+};
+
+box.querySelector(".fm-debris-top").style.cssText = `
+display:flex;
+align-items:center;
+gap:10px;
+`;
+
+box.querySelector(".fm-file-upload").style.cssText = `
+display:flex;
+align-items:center;
+gap:6px;
+`;
+
+uploadBtn.style.cssText = `
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:115px;
+height:34px;
+border-radius:6px;
+background:#2d7ef7;
+color:#fff;
+font-size:12px;
+font-weight:600;
+cursor:pointer;
+transition:.2s;
+`;
+
+uploadBtn.onmouseenter = () => {
+    uploadBtn.style.background = "#1668df";
+};
+
+uploadBtn.onmouseleave = () => {
+    uploadBtn.style.background = "#2d7ef7";
+};
+
+const fileInfo = box.querySelector(".fm-file-info");
+
+fileInfo.style.cssText = `
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+border:1px solid #dadada;
+border-radius:6px;
+background:#fafafa;
+padding:5px 8px;
+`;
+
+fileName.style.cssText = `
+flex:1;
+font-size:11px;
+color:#444;
+overflow:hidden;
+white-space:nowrap;
+text-overflow:ellipsis;
+max-width:50px;
+display:inline-block;
+`;
+
+const actions = box.querySelector(".fm-file-actions");
+
+actions.style.cssText = `
+display:flex;
+gap:5px;
+flex-shrink:0;
+`;
+
+changeBtn.style.cssText = `
+height:24px;
+padding:0 8px;
+border:none;
+border-radius:5px;
+background:#ffb400;
+color:#fff;
+font-size:11px;
+cursor:pointer;
+transition:.2s;
+`;
+
+changeBtn.onmouseenter = () => {
+    changeBtn.style.background = "#e59d00";
+};
+
+changeBtn.onmouseleave = () => {
+    changeBtn.style.background = "#ffb400";
+};
+
+deleteBtn.style.cssText = `
+height:24px;
+padding:0 8px;
+border:none;
+border-radius:5px;
+background:#ef4444;
+color:#fff;
+font-size:11px;
+cursor:pointer;
+transition:.2s;
+`;
+
+deleteBtn.onmouseenter = () => {
+    deleteBtn.style.background = "#d63030";
+};
+
+deleteBtn.onmouseleave = () => {
+    deleteBtn.style.background = "#ef4444";
+};
+
+previewBtn.style.cssText = `
+display:none;
+align-items:center;
+justify-content:center;
+width:24px;
+height:24px;
+font-size:16px;
+cursor:pointer;
+user-select:none;
+`;
+
+// ==============================
+// Preview Popup
+// ==============================
+
+previewPopup.style.cssText = `
+position:fixed;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,.65);
+backdrop-filter:blur(3px);
+z-index:999999999;
+`;
+
+const previewBox =
+    box.querySelector(".fm-preview-box");
+
+previewBox.style.cssText = `
+width:min(1200px,95vw);
+height:min(90vh,900px);
+background:#fff;
+border-radius:12px;
+overflow:hidden;
+position:relative;
+box-shadow:0 15px 50px rgba(0,0,0,.35);
+`;
+
+previewClose.style.cssText = `
+position:absolute;
+right:15px;
+top:15px;
+width:34px;
+height:34px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:#f5f5f5;
+border:1px solid #ddd;
+cursor:pointer;
+font-size:18px;
+font-weight:bold;
+z-index:2;
+transition:.2s;
+`;
+
+previewClose.onmouseenter = () => {
+    previewClose.style.background = "#d32f2f";
+    previewClose.style.color = "#fff";
+};
+
+previewClose.onmouseleave = () => {
+    previewClose.style.background = "#f5f5f5";
+    previewClose.style.color = "#000";
+};
+
+previewContent.style.cssText = `
+width:100%;
+height:100%;
+`;
 			let currentFile = "";
 			(async () => {
 				uploadBtn.onclick = (e) => {
@@ -1342,7 +1577,7 @@ async function run() {
             gap:6px;
             flex-wrap:wrap;
             align-items:center;
-            z-index:999999;
+            z-index:2;
             padding:3px 0;
             pointer-events:none;
         `;
